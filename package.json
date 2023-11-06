@@ -1,0 +1,56 @@
+{
+  "name": "timemaneger",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "chart.js": "^3.1.0",
+    "core-js": "^3.33.1",
+    "ejs": "^3.1.9",
+    "jquery": "^3.7.1",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.29.4",
+    "postcss-svgo": "^6.0.0",
+    "vue": "^3.3.7",
+    "vue-chart-3": "^3.1.8",
+    "vue-loader": "^17.3.0",
+    "vue-router": "^4.2.5",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/eslint-parser": "^7.22.15",
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-plugin-eslint": "~5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "@vue/compiler-sfc": "^3.3.7",
+    "eslint": "^8.52.0",
+    "eslint-plugin-vue": "^9.18.1",
+    "html-webpack-plugin": "^5.5.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
