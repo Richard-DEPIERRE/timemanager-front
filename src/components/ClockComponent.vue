@@ -52,31 +52,27 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["getUserId", "getToken"]),
+        ...mapGetters(["getUserId", "getToken", "getViewUserId"]),
     },
     methods: {
         async clockChange() {
             this.clockIn = !this.clockIn;
-            // let userId = this.getUserId
             let token = this.getToken;
-            console.log(token);
             try {
-                // if (userId != 0) {
                 if (!this.clockIn) {
                     this.title = 'Working';
                     this.statusColor = '#34a300';
                     this.boxShadowStatus = '0px 0px 45px 5px #34a300';
                     this.beginDate = moment().format("YYYY-MM-DD HH:mm:ss")
-                    await addClock(!this.clockIn, moment().format("YYYY-MM-DD HH:mm"), "Clock In", token);
+                    await addClock(!this.clockIn, moment().format("YYYY-MM-DD HH:mm:ss"), "Clock In", token);
                 } else {
                     this.title = 'Resting';
                     this.statusColor = '#aa0000';
                     this.boxShadowStatus = '0px 0px 45px 5px #aa0000';
                     this.endDate = moment().format("YYYY-MM-DD HH:mm:ss")
-                    await addClock(!this.clockIn, moment().format("YYYY-MM-DD HH:mm"), "Clock Out", token);
+                    await addClock(!this.clockIn, moment().format("YYYY-MM-DD HH:mm:ss"), "Clock Out", token);
 
                 }
-                // }
             } catch (e) {
                 console.error('Error adding clock:', e);
             }
@@ -96,16 +92,29 @@ export default {
         },
         async setLastClock() {
             let token = this.getToken;
-            console.log(token);
-            const response = await getLastClockByUserId(25, token);
-            console.log(response.data.data[0].status);
-            if (response.data.data[0].status == true) {
-                this.clockIn = !response.data.data[0].status;
-                this.beginDate = response.data.data[0].time;
-                this.title = 'Working';
-                console.log(response.data);
+            if (this.getViewUserId != 0) {
+                let OtherUserResponse = await getLastClockByUserId(token);
+                console.log(OtherUserResponse.data.data[0]);
+                if (OtherUserResponse.data.data[0].status == true) {
+                    this.clockIn = !OtherUserResponse.data.data[0].status;
+                    this.beginDate = OtherUserResponse.data.data[0].time;
+                    this.title = 'Working';
+                } else {
+                    this.title = 'Resting';
+                    this.statusColor = '#aa0000';
+                    this.boxShadowStatus = '0px 0px 45px 5px #aa0000';
+                }
             } else {
-                this.title = 'Resting';
+                let response = await getLastClockByUserId(token);
+                if (response.data.data[0].status == true) {
+                    this.clockIn = !response.data.data[0].status;
+                    this.beginDate = response.data.data[0].time;
+                    this.title = 'Working';
+                } else {
+                    this.title = 'Resting';
+                    this.statusColor = '#aa0000';
+                    this.boxShadowStatus = '0px 0px 45px 5px #aa0000';
+                }
             }
         },
     },
@@ -118,7 +127,6 @@ export default {
 
 <style>
 :root {
-    /* Theme */
     --primary-color: #365eaa;
     --light-color: #d0dffc;
     --dark-color: #202d50;
